@@ -8,13 +8,13 @@
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #ffe6eb;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -24,6 +24,7 @@
             z-index: 10;
             cursor: pointer;
             transition: transform 0.3s ease;
+            margin: 20px;
         }
 
         .envelope-container:hover {
@@ -86,7 +87,6 @@
             pointer-events: none;
         }
 
-        /* Hover efektiyle zarf açılır ve küçük kağıt ucu görünür */
         .envelope-container:hover .flap {
             transform: rotateX(180deg);
             z-index: 1;
@@ -169,7 +169,6 @@
             transform: translateY(0) scale(1);
         }
 
-        /* Özel Kaydırma Çubuğu */
         .large-paper::-webkit-scrollbar { width: 8px; }
         .large-paper::-webkit-scrollbar-track { background: #ffe6eb; border-radius: 10px; }
         .large-paper::-webkit-scrollbar-thumb { background: #ff80a6; border-radius: 10px; }
@@ -203,7 +202,7 @@
         .photo-card {
             position: absolute;
             background: white;
-            padding: 10px 10px 25px 10px;
+            padding: 8px 8px 20px 8px;
             border-radius: 8px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             transition: transform 0.3s ease, z-index 0.3s ease;
@@ -214,27 +213,27 @@
         }
 
         .photo-card:hover {
-            transform: scale(1.15) rotate(0deg) !important; /* Üzerine gelince düzleşir ve büyür */
+            transform: scale(1.15) rotate(0deg) !important;
             z-index: 50;
             box-shadow: 0 15px 30px rgba(0,0,0,0.3);
         }
 
         .photo-card img {
-            width: 140px;
-            height: 140px;
+            width: 130px;
+            height: 130px;
             object-fit: cover;
             border-radius: 4px;
-            background-color: #f0f0f0; /* Fotoğraf yüklenmezse diye arkaplan */
+            background-color: #f0f0f0;
         }
 
         .photo-card span {
-            margin-top: 10px;
-            font-size: 1rem;
+            margin-top: 8px;
+            font-size: 0.9rem;
             color: #ff6693;
             font-weight: bold;
         }
 
-        /* Fotoğraf Kartlarının Konumları */
+        /* Masaüstü Konumları */
         .card-1 { top: 10%; left: 8%; transform: rotate(-12deg); }
         .card-2 { bottom: 15%; left: 12%; transform: rotate(8deg); }
         .card-3 { top: 15%; right: 8%; transform: rotate(10deg); }
@@ -264,7 +263,6 @@
         .f-heart:nth-child(4) { left: 85%; animation-delay: 3s; }
         .f-heart:nth-child(5) { left: 50%; animation-delay: 4.5s; font-size: 35px; }
 
-        /* Animasyonlar */
         @keyframes pulseText {
             0%, 100% { transform: scale(1); opacity: 0.8; }
             50% { transform: scale(1.05); opacity: 1; }
@@ -275,11 +273,36 @@
             100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
 
-        /* Mobil Uyum */
+        /* Mobil Uyum (Fotoğrafları gizlemek yerine köşelere küçülterek yerleştirdik) */
         @media (max-width: 768px) {
-            .photo-card { display: none; } /* Mobilde ekranı daraltmaması için fotoğrafları gizledik */
-            .envelope-container { margin-top: 50px; }
-            .large-paper { width: 95%; padding: 25px; font-size: 1.1rem; line-height: 28px; }
+            body {
+                flex-direction: column;
+                justify-content: center;
+                height: 100vh;
+            }
+
+            .photo-card {
+                position: absolute;
+                padding: 5px 5px 15px 5px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            }
+
+            .photo-card img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .photo-card span {
+                font-size: 0.7rem;
+            }
+
+            /* Mobilde fotoğrafların konumları (köşelere dağıtıldı) */
+            .card-1 { top: 15px; left: 15px; transform: rotate(-6deg); }
+            .card-3 { top: 15px; right: 15px; transform: rotate(6deg); }
+            .card-2 { bottom: 15px; left: 15px; transform: rotate(6deg); }
+            .card-4 { bottom: 15px; right: 15px; transform: rotate(-6deg); }
+
+            .large-paper { width: 90%; padding: 25px; font-size: 1.1rem; line-height: 28px; }
         }
     </style>
 </head>
@@ -293,8 +316,7 @@
         <div class="f-heart">💖</div>
     </div>
 
-    <!-- Çift Fotoğraf Kartları (LİNKLERİ BURAYA EKLEYEBİLİRSİN) -->
-    <!-- src kısmına kendi fotoğrafınızın linkini yapıştırın -->
+    <!-- Fotoğraf Kartları -->
     <div class="photo-card card-1">
         <a href="https://ibb.co/6c2MKJBt"><img src="https://i.ibb.co/nqTGX8C1/recep4.jpg" alt="recep4" border="0"></a>
         <span>İyi ki sen...</span>
@@ -314,12 +336,11 @@
         <a href="https://ibb.co/Xw0K6y2"><img src="https://i.ibb.co/FPZycsx/recep1.jpg" alt="recep1" border="0"></a>
         <span>Seni Seviyorum</span>
     </div>
-    <!-- /Fotoğraf Kartları Sonu -->
 
     <div class="envelope-container" onclick="openLetter()">
         <div class="flap"></div>
         <div class="letter-peek">
-            <span>💌 DOĞUM GÜNÜN KUTLU OLSUN SEVGİLİM... MEKTUBU OKUMAK İÇİN TIKLA 💌</span>
+            <span>💌 DOĞUM GÜNÜN KUTLU OLSUN SEvgİLİM... MEKTUBU OKUMAK İÇİN TIKLA 💌</span>
         </div>
         <div class="envelope"></div>
     </div>
@@ -343,12 +364,10 @@
     </div>
 
     <script>
-        // Mektubu açan fonksiyon
         function openLetter() {
             document.getElementById('letterOverlay').classList.add('active');
         }
 
-        // Mektubu kapatan fonksiyon
         function closeLetter(event) {
             document.getElementById('letterOverlay').classList.remove('active');
             event.stopPropagation();
